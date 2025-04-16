@@ -65,6 +65,10 @@ export const configProviderProps = buildProps({
     type: String,
     default: 'el',
   },
+  scale: {
+    type: Number,
+    default: 1,
+  },
   ...useEmptyValuesProps,
 } as const)
 export type ConfigProviderProps = ExtractPropTypes<typeof configProviderProps>

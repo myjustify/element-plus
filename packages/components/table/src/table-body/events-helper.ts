@@ -2,6 +2,7 @@
 import { h, inject, ref } from 'vue'
 import { debounce } from 'lodash-unified'
 import { addClass, hasClass, removeClass } from '@element-plus/utils'
+import { useGlobalConfig } from '@element-plus/components/config-provider'
 import {
   createTablePopper,
   getCell,
@@ -149,12 +150,16 @@ function useEvents<T>(props: Partial<TableBodyProps<T>>) {
     const { top, left, right, bottom } = getPadding(cellChild)
     const horizontalPadding = left + right
     const verticalPadding = top + bottom
+    const config = useGlobalConfig()
     if (
       isGreaterThan(rangeWidth + horizontalPadding, cellChildWidth) ||
       isGreaterThan(rangeHeight + verticalPadding, cellChildHeight) ||
       // When using a high-resolution screen, it is possible that a returns cellChild.scrollWidth value of 1921 and
       // cellChildWidth returns a value of 1920.994140625. #16856 #16673
-      isGreaterThan(cellChild.scrollWidth, cellChildWidth)
+      isGreaterThan(
+        cellChild.scrollWidth * (config.value.scale ?? 1),
+        cellChildWidth
+      )
     ) {
       createTablePopper(
         tooltipOptions,
