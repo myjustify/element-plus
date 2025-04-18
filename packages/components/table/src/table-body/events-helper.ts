@@ -63,11 +63,12 @@ function useEvents<T>(props: Partial<TableBodyProps<T>>) {
     const paddingRight = Number.parseInt(style.paddingRight, 10) || 0
     const paddingTop = Number.parseInt(style.paddingTop, 10) || 0
     const paddingBottom = Number.parseInt(style.paddingBottom, 10) || 0
+    const config = useGlobalConfig()
     return {
-      left: paddingLeft,
-      right: paddingRight,
-      top: paddingTop,
-      bottom: paddingBottom,
+      left: paddingLeft * config.value.scale,
+      right: paddingRight * config.value.scale,
+      top: paddingTop * config.value.scale,
+      bottom: paddingBottom * config.value.scale,
     }
   }
 
