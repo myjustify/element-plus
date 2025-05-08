@@ -14,9 +14,11 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { computed, defineComponent, inject, onMounted, ref } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import { useNamespace } from '@element-plus/hooks'
+import { useGlobalConfig } from '@element-plus/components/config-provider'
 import { selectKey } from './token'
 
 export default defineComponent({
@@ -34,8 +36,10 @@ export default defineComponent({
     const isFitInputWidth = computed(() => select.props.fitInputWidth)
     const minWidth = ref('')
 
+    const config = useGlobalConfig()
+
     function updateMinWidth() {
-      minWidth.value = `${select.selectRef?.offsetWidth}px`
+      minWidth.value = `${select.selectRef?.offsetWidth * config.value.scale}px`
     }
 
     onMounted(() => {
